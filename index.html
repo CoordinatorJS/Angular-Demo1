@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Front-End Technical Test</title>
+	<!-- Angular Material style sheet -->
+  	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+</head>
+
+<body ng-app="colBetsApp" ng-controller="mainCtrl" ng-cloak>
+	<md-content class="md-padding">
+		<div layout="row" layout-xs="column">
+  			<div flex>
+				<md-card>
+					<md-card-title>
+						  <md-card-title-text>
+						    <span class="md-headline">Select a pool</span>
+						    <span class="md-subhead"></span>
+						  </md-card-title-text>
+					</md-card-title>
+					<md-card-content>
+    						<div ng-repeat="e in dataIn | orderBy:'display_group_order'">
+							<div layout="row" layout-xs="column">
+  								<div flex>
+									<p class="md-body-1">{{e.display_group_name}}</p>
+								</div>
+  								<div flex>
+									<div id="pools" ng-repeat="p in e.pools">
+										<md-button id="{{p.id}}" class="md-raised" ng-click="getPool(p.id)">{{p.name}} (ID={{p.id}})</md-button>	
+									</div>
+								</div>
+							</div>
+    						</div>
+					</md-card-content>
+				</md-card>
+			</div>
+			<div flex>
+				<md-card ng-if="pool">
+					<md-card-title>
+						  <md-card-title-text>
+						    <span class="md-headline">{{pool.pool_info.name}}</span>
+						    <span class="md-subhead">Number of lines: {{numberOfLines()}}</span>
+						  </md-card-title-text>
+					</md-card-title>
+					<md-card-content>
+						<div id="legs" ng-repeat="leg in pool.legs">
+		<!-- Selections -->
+							<div>
+								<div layout="row" layout-sm="column">
+									<div flex>
+										{{leg.sport_event.name}} (ID={{leg.id}})
+									</div>
+				  					<div flex>
+										<div layout="row">
+											<md-input-container>
+												<label>Selections</label>
+												<md-select ng-model="sel.selected" multiple>
+											  		<md-optgroup label="Selections">
+														<md-option ng-value="selection.legIdSelId" ng-repeat="selection in leg.selections | orderBy:'display_order'" ng-click="getSelections(leg, selection)">{{selection.name}} (ID={{selection.id}})</md-option>
+											  		</md-optgroup>
+												</md-select>
+										  	</md-input-container>
+										</div>
+									</div>			
+								</div>
+				  			</div>
+						</div>
+
+
+
+					</md-card-content>
+					<md-card-actions layout="row" layout-align="end center">
+						<div layout="row">
+							<md-input-container>
+								<label>Stake (in £)</label>
+								<md-select ng-model="stake.selected">
+							  		<md-optgroup label="Stake (in &#163)">
+										<md-option value="{{value}}" ng-repeat="value in stake.values" ng-click="getStake(value)">{{value}}</md-option>
+							  		</md-optgroup>
+								</md-select>
+						  	</md-input-container>
+						</div>
+					  	<md-button class="md-raised md-primary" ng-click="placeBet()">Place a &#163{{stake.selected * numberOfLines()}} bet</md-button>
+					</md-card-actions>
+      				</md-card>
+			</div>
+		</div>
+	</md-content>
+
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	
+	<!-- Angular Material Design -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	
+	<!-- Angular Controllers -->
+	<script src="js/controllers.js"></script>
+
+</body>
+</html>
