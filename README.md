@@ -1,4 +1,4 @@
-# Angular-Demo1
+# AngularJS Demo1
 Front-End Technical Test built with AngularJS
 
 Using $http GET and POST, material design and multi-selections for a responsive UI.
