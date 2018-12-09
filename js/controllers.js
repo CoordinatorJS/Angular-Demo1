@@ -111,7 +111,7 @@ app.controller('mainCtrl', function ($scope, $http, $httpParamSerializerJQLike, 
 					alert("Tickets posted to server with success: " + data);
 				}, 
 				function(response) { // optional
-				   // failed
+				   	// failed
 					console.log("Failure in posting the data to the server");
 					alert("Failure in posting the data to the server");
 				});
